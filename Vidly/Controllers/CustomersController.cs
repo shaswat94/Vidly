@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Vidly.Models;
+using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
@@ -39,5 +40,51 @@ namespace Vidly.Controllers
 
             return View(customer);
         }
+
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new CustomerFormViewModel()
+            {
+                MembershipTypes = membershipTypes
+            };
+            
+            return View("CustomerForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Customer customer) //name must be same as that of the model for model binding to work.
+        {
+            if (customer.Id == 0)
+            {
+                _context.Customers.Add(customer);
+            }
+
+            var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+            customerInDb.Name = customer.Name;
+            customerInDb.Birthdate = customer.Birthdate;
+            customerInDb.MembershipTypeId = customer.MembershipTypeId;
+            customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+
+            _context.SaveChanges(); //To persist the changes in database
+
+            return RedirectToAction("Index","Customers");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+                return HttpNotFound();
+
+            var viewModel = new CustomerFormViewModel()
+            {
+                MembershipTypes = _context.MembershipTypes.ToList(),
+                Customer = customer
+            };
+
+            return View("CustomerForm", viewModel);
+        }
+
     }
 }
