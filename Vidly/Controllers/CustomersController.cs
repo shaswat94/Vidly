@@ -59,15 +59,16 @@ namespace Vidly.Controllers
             {
                 _context.Customers.Add(customer);
             }
-
-            var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
-            customerInDb.Name = customer.Name;
-            customerInDb.Birthdate = customer.Birthdate;
-            customerInDb.MembershipTypeId = customer.MembershipTypeId;
-            customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            else
+            {
+                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+                customerInDb.Name = customer.Name;
+                customerInDb.Birthdate = customer.Birthdate;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            }
 
             _context.SaveChanges(); //To persist the changes in database
-
             return RedirectToAction("Index","Customers");
         }
 
