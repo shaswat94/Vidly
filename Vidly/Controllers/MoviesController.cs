@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -51,15 +52,28 @@ namespace Vidly.Controllers
         /// Method saves a new movie to Database
         /// </summary>
         /// <returns></returns>
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new MovieFormViewModel(movie)
+                {
+                    Genres = _context.Genres.ToList()
+                };
+
+                return View("MoviesForm", viewModel);
+            }
+
             if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
                 _context.Movies.Add(movie);
+            }   
             else
             {
                 var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
                 movieInDb.Name = movie.Name;
-                movieInDb.DateAdded = movie.DateAdded;
                 movieInDb.ReleaseDate = movie.ReleaseDate;
                 movieInDb.GenreId = movie.GenreId;
             }
@@ -81,10 +95,9 @@ namespace Vidly.Controllers
             if (movie == null)
                 return HttpNotFound();
 
-            var moviesViewModel = new MovieFormViewModel()
+            var moviesViewModel = new MovieFormViewModel(movie)
             {
-                Movie = movie,
-                Genres = genres
+               Genres = genres
             };
 
             return View("MoviesForm", moviesViewModel);
