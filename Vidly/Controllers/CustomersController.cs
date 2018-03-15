@@ -24,10 +24,10 @@ namespace Vidly.Controllers
         {
             //Queries to the database to fetch the list of customers because of the presence of .ToList() function
             //deferred execution
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
+            //var customers = _context.Customers.Include(c => c.MembershipType).ToList();
             //Eager loading - Loads the Customer and its related properties here membership type.
 
-            return View(customers);
+            return View();//customers);
         }
 
         public ActionResult Details(int id)

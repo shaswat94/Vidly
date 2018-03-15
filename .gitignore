@@ -12,6 +12,10 @@ bin
 obj
 packages
 
+Vidly/Content/Datatables
+Vidly/Scripts/Datatables
+Vidly/Scripts/*.js
 Vidly/bin
 Vidly/obj
 Vidly/*.config
+Vidly/Scripts/_references.js

@@ -19,27 +19,20 @@
 
 <a class="btn btn-primary" style="margin-bottom: 10px;" href="/Customers/New">New Customer</a>
 
-@if (!Model.Any())
+<table class="table table-bordered table-hover" id="customers">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Membership Type</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section scripts
 {
-    <p>We don't have any customers yet.</p>
-}
-else
-{
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Customer</th>
-                <th>Membership Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model)
-            {
-                <tr>
-                    <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new {id = customer.Id}, null)</td>
-                    <td>@customer.MembershipType.Name</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <script>
+        
+    </script>
 }
