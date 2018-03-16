@@ -19,7 +19,7 @@ namespace Vidly
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/customScripts").Include(
+            bundles.Add(new ScriptBundle("~/bundles/adminScripts").Include(
                 "~/Scripts/Vidly/customerScript.js",
                 "~/Scripts/Vidly/movieScript.js"));
 

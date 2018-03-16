@@ -41,18 +41,19 @@ namespace Vidly.Controllers.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public MovieDto GetMovie(int id)
+        public IHttpActionResult GetMovie(int id)
         {
             var movie = _context.Movies.SingleOrDefault(c => c.Id == id);
 
             if (movie == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return Mapper.Map<Movie, MovieDto>(movie);
+            return Ok(Mapper.Map<Movie, MovieDto>(movie));
         }
 
         //Post /api/movie
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageMovies)]
         public IHttpActionResult AddMovie(MovieDto movieDto)
         {
             if (!ModelState.IsValid)
@@ -75,7 +76,8 @@ namespace Vidly.Controllers.Api
         /// <param name="id"></param>
         /// <param name="customer"></param>
         [HttpPut]
-        public void UpdateMovie(int id, MovieDto movieDto)
+        [Authorize(Roles = RoleName.CanManageMovies)]
+        public IHttpActionResult UpdateMovie(int id, MovieDto movieDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -89,6 +91,8 @@ namespace Vidly.Controllers.Api
             //Compiler automatically knows the type of arguments and copies values from source to target
 
             _context.SaveChanges();
+
+            return Ok("Updated");
         }
 
         //DELETE /api/movie/1
@@ -97,7 +101,8 @@ namespace Vidly.Controllers.Api
         /// </summary>
         /// <param name="id"></param>
         [HttpDelete]
-        public void DeleteMovie(int id)
+        [Authorize(Roles = RoleName.CanManageMovies)]
+        public IHttpActionResult DeleteMovie(int id)
         {
             var movieInDb = _context.Movies.SingleOrDefault(c => c.Id == id);
 
@@ -106,6 +111,8 @@ namespace Vidly.Controllers.Api
 
             _context.Movies.Remove(movieInDb);
             _context.SaveChanges();
+
+            return Ok("Deleted");
         }
     }
 }

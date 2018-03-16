@@ -6,12 +6,13 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Material Design Bootstrap -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
 </head>
 <body>
+    @Scripts.Render("~/bundles/lib")
     @Html.Partial("_NavBar")
     <div class="container body-content">
         @RenderBody()
@@ -21,12 +22,10 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/lib")
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
-    @Scripts.Render("~/bundles/customScripts")
     @RenderSection("scripts", required: false)
 </body>
 </html>
