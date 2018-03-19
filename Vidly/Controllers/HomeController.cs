@@ -16,8 +16,9 @@ namespace Vidly.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
 
+            //ViewBag.Message = "Your application description page.";
+            throw new Exception();
             return View();
         }
 
