@@ -38,7 +38,7 @@ namespace Vidly.Controllers.Api
                 .Select(Mapper.Map<Customer, CustomerDto>);
 
             return Ok(customerDtos);
-            //used as deegate, a referance to Mapper.Map<>(). Thus method braces are removed
+            //used as delegate, a referance to Mapper.Map<>(). Thus method braces are removed
         }
 
         //Get /api/customer/1
